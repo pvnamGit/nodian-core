@@ -1,0 +1,13 @@
+plugins {
+    id "java"
+}
+
+dependencies {
+    implementation project(':nodian-entity')
+    implementation project(':nodian-usecase')
+    implementation project(':nodian-infrastructure')
+}
+
+bootJar {
+    mainClass = 'com.nodian.application.NodianCoreApplication'
+}

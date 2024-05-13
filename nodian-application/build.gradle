@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+bootJar {
+    mainClass = 'com.nodian.application.NodianCoreApplication'
+}
+bootRun {
+    environment SPRING_PROFILES_ACTIVE: environment.SPRING_PROFILES_ACTIVE ?: "dev"
+}
+
+
+dependencies {
+    implementation project(':nodian-adapter')
+    implementation project(':nodian-entity')
+    implementation project(':nodian-usecase')
+    implementation project(':nodian-infrastructure')
+}
