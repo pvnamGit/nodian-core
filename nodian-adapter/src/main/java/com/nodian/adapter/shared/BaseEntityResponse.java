@@ -12,6 +12,7 @@ import lombok.Data;
 public class BaseEntityResponse<T> {
     private Boolean success;
     private String message;
+    private BaseErrorResponse error;
     private T data;
 
     public static <T> BaseEntityResponse<T> success() {
@@ -35,10 +36,10 @@ public class BaseEntityResponse<T> {
                 .build();
     }
 
-    public static <T> BaseEntityResponse<T> error(String message) {
+    public static <T> BaseEntityResponse<T> error(BaseErrorResponse error) {
         return BaseEntityResponse.<T>builder()
                 .success(Boolean.FALSE)
-                .message(message)
+                .error(error)
                 .build();
     }
 }
