@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface AccountRepository  {
     Account findByEmail(String email);
+    void persist(Account account);
 }

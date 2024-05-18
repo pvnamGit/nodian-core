@@ -8,6 +8,7 @@ import org.hibernate.annotations.SQLDelete;
 
 @Setter
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
