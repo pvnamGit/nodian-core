@@ -17,6 +17,7 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -55,12 +56,17 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
     public AuthenticationRESP signIn(SignInREQ req) {
         Account account = accountRepository.findByEmail(req.getEmail());
         if (account == null) throw new EntityNotFoundException();
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        req.getEmail(),
-                        req.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            req.getEmail(),
+                            req.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException(e.getMessage());
+        }
+
         SecurityAccountDetails accountDetails = SecurityAccountDetails.build(account);
         String token = jwtService.generateToken(accountDetails);
         return AuthenticationRESP.builder().token(token).build();

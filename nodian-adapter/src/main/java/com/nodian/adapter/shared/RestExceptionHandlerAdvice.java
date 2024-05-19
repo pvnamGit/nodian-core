@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -79,5 +80,13 @@ public class RestExceptionHandlerAdvice {
     public BaseEntityResponse constraintViolationException(ConstraintViolationException e) {
         log.error("ConstraintViolationException {}", e.getMessage(), e);
         return BaseEntityResponse.error(new BaseErrorResponse(ErrorCode.E007.getCode(), ErrorCode.E007.getMessage(), e.getMessage(), null));
+    }
+
+    @SneakyThrows
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public BaseEntityResponse badCredentialsException(BadCredentialsException e) {
+        log.error("BadCredentialsException {}", e.getMessage(), e);
+        return BaseEntityResponse.error(new BaseErrorResponse(ErrorCode.E008.getCode(), ErrorCode.E008.getMessage(), null, null));
     }
 }

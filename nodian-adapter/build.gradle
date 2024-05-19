@@ -5,7 +5,6 @@ plugins {
 dependencies {
     implementation project(':nodian-entity')
     implementation project(':nodian-usecase')
-    implementation project(':nodian-infrastructure')
 }
 
 bootJar {

@@ -1,4 +1,4 @@
-package com.nodian.adapter.controller.athentication;
+package com.nodian.adapter.athentication;
 
 import com.nodian.adapter.shared.BaseEntityResponse;
 import com.nodian.domain.authentication.facade.AuthenticationFacade;

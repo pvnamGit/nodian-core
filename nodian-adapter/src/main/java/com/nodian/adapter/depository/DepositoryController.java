@@ -1,4 +1,4 @@
-package com.nodian.adapter.controller.depository;
+package com.nodian.adapter.depository;
 
 import com.nodian.adapter.shared.BaseEntityResponse;
 import com.nodian.adapter.shared.BasePaginationResponse;

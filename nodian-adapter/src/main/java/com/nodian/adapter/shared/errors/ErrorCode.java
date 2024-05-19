@@ -12,7 +12,8 @@ public enum ErrorCode implements ErrorCodeType {
     E004("E004", "Record not found"),
     E005("E005", "Internal Server Error"),
     E006("E006", "Invalid Request Payload"),
-    E007("E007", "Constraint Violation");
+    E007("E007", "Constraint Violation"),
+    E008("E008", "Bad Credentials");
 
     final String code;
     final String message;
