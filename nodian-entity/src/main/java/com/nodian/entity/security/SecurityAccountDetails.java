@@ -1,9 +1,10 @@
-package com.nodian.infrastructure.security;
+package com.nodian.entity.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nodian.entity.account.Account;
 import com.nodian.entity.account.ERole;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,7 @@ import java.util.List;
 @Service
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class SecurityAccountDetails implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -26,10 +28,14 @@ public class SecurityAccountDetails implements UserDetails {
     private String email;
 
     @JsonIgnore
-    @Getter
     private String password;
     @Getter
     private Long userId;
+    @Getter
+    private Long accountId;
+    @Getter
+    private ERole authority;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public static SecurityAccountDetails build(Account account) {
@@ -40,9 +46,21 @@ public class SecurityAccountDetails implements UserDetails {
         }
         var email = account.getEmail();
         var password = account.getPassword();
-        var userId =  account.getUser().getId();
-        return new SecurityAccountDetails(email,password,userId, authorities);
+        var userId = account.getUser().getId();
+        var accountId = account.getId();
+        var authority = account.getAuthority();
+        return new SecurityAccountDetails(email, password, userId, accountId, authority, authorities);
     }
+
+    public static SecurityAccountDetails buildCurrentUser(SecurityAccountDetails accountDetail) {
+        return SecurityAccountDetails.builder()
+                .accountId(accountDetail.accountId)
+                .userId(accountDetail.userId)
+                .email(accountDetail.getEmail())
+                .authority(accountDetail.getAuthority())
+                .build();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

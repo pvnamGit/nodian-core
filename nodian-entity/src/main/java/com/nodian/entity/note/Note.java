@@ -38,7 +38,7 @@ public class Note extends BaseEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "repo_id")
+    @JoinColumn(name = "depository_id")
     private Depository depository;
 
     @ManyToOne

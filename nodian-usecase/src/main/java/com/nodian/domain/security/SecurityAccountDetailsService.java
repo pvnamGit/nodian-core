@@ -1,6 +1,7 @@
-package com.nodian.infrastructure.security;
+package com.nodian.domain.security;
 
-import com.nodian.infrastructure.repository.account.AccountRepository;
+import com.nodian.entity.account.AccountRepository;
+import com.nodian.entity.security.SecurityAccountDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

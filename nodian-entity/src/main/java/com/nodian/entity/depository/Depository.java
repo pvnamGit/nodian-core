@@ -17,20 +17,17 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "repositories")
+@Table(name = "depositories")
 @SQLDelete(sql = "UPDATE repositories SET is_active = false")
 @Where(clause = "is_active = true")
 public class Depository extends BaseEntity {
+    @OneToMany(mappedBy = "depository", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Folder> folders;
     @Column(name = "name")
     private String name;
-
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
-
-    @OneToMany(mappedBy = "depository", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Folder> folders;
-
     @OneToMany(mappedBy = "depository", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Note> notes;
 

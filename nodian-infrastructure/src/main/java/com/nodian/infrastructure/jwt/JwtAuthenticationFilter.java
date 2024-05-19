@@ -1,8 +1,6 @@
 package com.nodian.infrastructure.jwt;
 
-import com.nimbusds.oauth2.sdk.AuthorizationRequest;
-import com.nodian.infrastructure.security.SecurityAccountDetails;
-import com.nodian.infrastructure.security.SecurityAccountDetailsService;
+import com.nodian.domain.jwt.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String parseAuthorizationToken(@NonNull HttpServletRequest request) {
         final var authHeader = request.getHeader(AUTH_HEADER);
-        if (authHeader == null || authHeader.startsWith(BEARER_TOKEN)) return null;
+        if (authHeader == null || !authHeader.startsWith(BEARER_TOKEN)) return null;
         return authHeader.substring(JWT_POSITION);
     }
 
@@ -54,13 +52,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         try {
             final var userEmail = jwtService.extractUsername(jwtToken);
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (userEmail == null || authentication == null) {
+            if (userEmail == null) {
                 filterChain.doFilter(request, response);
                 return;
             }
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            if (jwtService.isTokenValid(jwtToken, userDetails)) {
+            if (authentication == null && jwtService.isTokenValid(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

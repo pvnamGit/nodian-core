@@ -4,14 +4,14 @@ import com.nodian.domain.authentication.facade.AuthenticationFacade;
 import com.nodian.domain.authentication.request.SignInREQ;
 import com.nodian.domain.authentication.request.SignUpREQ;
 import com.nodian.domain.authentication.response.AuthenticationRESP;
+import com.nodian.domain.jwt.JwtService;
+import com.nodian.entity.security.SecurityAccountDetails;
 import com.nodian.entity.account.Account;
+import com.nodian.entity.account.AccountRepository;
 import com.nodian.entity.account.AuthenticationProvider;
 import com.nodian.entity.account.ERole;
 import com.nodian.entity.user.User;
-import com.nodian.infrastructure.jwt.JwtService;
-import com.nodian.infrastructure.repository.account.AccountRepository;
-import com.nodian.infrastructure.repository.user.UserRepository;
-import com.nodian.infrastructure.security.SecurityAccountDetails;
+import com.nodian.entity.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
@@ -20,8 +20,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 
 @Service
 @AllArgsConstructor
@@ -43,7 +41,7 @@ public class AuthenticationFacadeImpl implements AuthenticationFacade {
                 .authenticationProvider(AuthenticationProvider.NONE)
                 .authority(ERole.USER)
                 .build();
-        accountRepository.persist(account);
+        accountRepository.persistAndFlush(account);
         User user = User.builder()
                 .firstName(signUpRequest.getFirstName())
                 .lastName(signUpRequest.getLastName())

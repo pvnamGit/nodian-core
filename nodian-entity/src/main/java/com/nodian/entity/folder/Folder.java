@@ -41,7 +41,7 @@ public class Folder extends BaseEntity {
     private List<Note> notes;
 
     @ManyToOne
-    @JoinColumn(name = "repository_id")
+    @JoinColumn(name = "depository_id")
     private Depository depository;
 
     @ManyToOne

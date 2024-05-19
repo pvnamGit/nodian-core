@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -12,9 +14,9 @@ public class BasePaginationResponse<T> {
     private Boolean success;
     private String message;
     private Integer total;
-    private T[] data;
+    private List<T> data;
 
-    public static<T> BasePaginationResponse success(T[] data, Integer total) {
+    public static<T> BasePaginationResponse success(List<T> data, Integer total) {
         return BasePaginationResponse.<T>builder()
                 .success(Boolean.TRUE)
                 .total(total)
@@ -22,7 +24,7 @@ public class BasePaginationResponse<T> {
                 .build();
     }
 
-    public static<T> BasePaginationResponse success(T[] data) {
+    public static<T> BasePaginationResponse success(List<T> data) {
         return BasePaginationResponse.<T>builder()
                 .success(Boolean.TRUE)
                 .data(data)

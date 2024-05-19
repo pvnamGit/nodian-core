@@ -1,4 +1,4 @@
-package com.nodian.infrastructure.jwt;
+package com.nodian.domain.jwt;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

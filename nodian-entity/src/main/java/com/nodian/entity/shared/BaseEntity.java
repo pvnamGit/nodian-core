@@ -21,7 +21,7 @@ public abstract class BaseEntity {
     private Long createdAt = Instant.now().toEpochMilli();
 
     @Column(name = "updated_at")
-    private Long updatedDate = Instant.now().toEpochMilli();
+    private Long updatedAt = Instant.now().toEpochMilli();
 
     @Column(name = "is_active")
     private Boolean isActive = true;
