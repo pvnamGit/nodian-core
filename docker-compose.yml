@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgresdb:
+    image: postgres:13-alpine3.19
+    restart: unless-stopped
+    container_name: postgres_db
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=nodian
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  app:
+    image: nodian-core
+    build:
+      context: .
+    container_name: nodian-core
+    depends_on:
+      - postgresdb
+    env_file:
+      - .env-docker
+    ports:
+      - 8080:8080
+volumes:
+  postgres-data:
