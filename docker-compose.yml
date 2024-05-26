@@ -19,6 +19,7 @@ services:
     image: nodian-core
     build:
       context: .
+      dockerfile: Dockerfile
     container_name: nodian-core
     depends_on:
       - postgresdb

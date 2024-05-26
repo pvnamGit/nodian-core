@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  stg-render:
+    image: nodian-core-staging-render
+    build:
+      context: .
+      dockerfile: render.Dockerfile
+    container_name: nodian-core-staging-render
+    env_file:
+      - .env-render
+    ports:
+      - 8080:8080

@@ -40,3 +40,4 @@ nodian-entity/build
 nodian-infrastructure/build
 nodian-usecase/build
 .env
+postgres-data
