@@ -24,7 +24,7 @@ services:
     depends_on:
       - postgresdb
     env_file:
-      - .env-docker
+      - .env.docker
     ports:
       - 8080:8080
 volumes:
